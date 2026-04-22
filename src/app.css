@@ -1,0 +1,61 @@
+@import 'tailwindcss';
+
+:root {
+	/* App Shell Matrix Theme Tokens */
+	--bg: #030712;
+	--code-bg: #0f172a;
+	--border: #1e293b;
+	--text: #94a3b8;
+	--text-h: #f8fafc;
+
+	--accent: #8b5cf6;
+	--accent-hover: #a78bfa;
+	--accent-border: #6d28d9;
+	--accent-bg: #4c1d95;
+	--danger: #ef4444;
+
+	/* SDUI BLADE SYSTEM THEME INJECTION */
+	--th-panel-bg: #1a1c23;
+	--th-element-bg: #272a35;
+	--th-element-bg-hover: #333845;
+	--th-border: #2e303a;
+	--th-border-hover: #4b5563;
+	--th-text-primary: #f9fafb;
+	--th-text-secondary: #9ca3af;
+	--th-accent: #3b82f6;
+	--th-accent-hover: #60a5fa;
+	--th-danger: #ef4444;
+	--th-success: #10b981;
+	--th-warning: #f59e0b;
+
+	--sans: system-ui, 'Segoe UI', Roboto, sans-serif;
+	--mono: ui-monospace, Consolas, monospace;
+
+	font-family: var(--sans);
+	color-scheme: dark;
+}
+
+body,
+html {
+	margin: 0;
+	padding: 0;
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+	background-color: var(--bg);
+	color: var(--text-h);
+}
+
+#root {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	font-family: var(--sans);
+}
