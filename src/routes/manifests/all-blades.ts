@@ -53,11 +53,11 @@ function buildRussianDollChain(): SduiBladeNode {
 		const currentWidth = decreasingWidths[i];
 		const nextWidth = decreasingWidths[i + 1];
 
-		if (!currentBlade.properties) currentBlade.properties = {};
-		if (!nextBlade.properties) nextBlade.properties = {};
+		if (!currentBlade.properties) currentBlade.properties = { title: 'Nested Blade' };
+		if (!nextBlade.properties) nextBlade.properties = { title: 'Nested Blade' };
 
-		currentBlade.properties.width = currentWidth;
-		nextBlade.properties.width = nextWidth;
+		currentBlade.properties.width = currentWidth as 'full';
+		nextBlade.properties.width = nextWidth as 'full';
 
 		// Create a button to open the next blade
 		const nextButton = {
@@ -81,7 +81,7 @@ function buildRussianDollChain(): SduiBladeNode {
 
 	// Make sure the first blade gets the first width
 	if (clonedApps[0].properties) {
-		clonedApps[0].properties.width = decreasingWidths[0];
+		clonedApps[0].properties.width = decreasingWidths[0] as 'full';
 	}
 
 	return clonedApps[0];
