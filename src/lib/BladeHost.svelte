@@ -6,10 +6,12 @@
 
 	let {
 		registry,
-		showBackdrop = false
+		showBackdrop = false,
+		offsetHeader = true
 	}: {
 		registry: Record<string, Component<Record<string, unknown>>>;
 		showBackdrop?: boolean;
+		offsetHeader?: boolean;
 	} = $props();
 
 	function slideRight(node: Element, { duration = 400 }) {
@@ -41,6 +43,31 @@
 	}
 
 	let isFirstRender = true;
+	let headerHeight = $state(0);
+
+	// Header Detection Effect
+	$effect(() => {
+		if (!offsetHeader) {
+			headerHeight = 0;
+			return;
+		}
+
+		const header = document.querySelector('header');
+		if (!header) return;
+
+		headerHeight = header.offsetHeight;
+		
+		const observer = new ResizeObserver((entries) => {
+			for (let entry of entries) {
+				if (entry.target === header) {
+					headerHeight = header.offsetHeight;
+				}
+			}
+		});
+		
+		observer.observe(header);
+		return () => observer.disconnect();
+	});
 
 	// Popstate listener for native browser Back/Forward navigation
 	$effect(() => {
@@ -115,6 +142,8 @@
 
 <div
 	class="blade-host-container-div absolute inset-0 w-full h-full overflow-hidden z-[100] pointer-events-none"
+	style:top="{headerHeight}px"
+	style:height="calc(100% - {headerHeight}px)"
 >
 	{#each sduiEngine.activeBlades as blade, index (blade.id)}
 		{@const ResolvedComponent = registry[blade.type]}
