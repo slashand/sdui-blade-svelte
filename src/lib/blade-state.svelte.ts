@@ -1,7 +1,12 @@
 import { createSduiBladeStore, type BladeState, type SduiBlade } from '@slashand/sdui-blade-core';
 
+export interface MinimalStore {
+	getState: () => BladeState;
+	subscribe: (listener: (state: BladeState, prevState: BladeState) => void) => () => void;
+}
+
 // Initialize the framework-agnostic Zustand store
-export const bladeStore = createSduiBladeStore();
+export const bladeStore: MinimalStore = createSduiBladeStore() as unknown as MinimalStore;
 
 export class SduiBladeEngine {
 	// Native Svelte 5 reactive array driven by the Zustand store
