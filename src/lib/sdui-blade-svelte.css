@@ -1,0 +1,15 @@
+:root {
+	/* SDUI BLADE SYSTEM THEME INJECTION */
+	--th-panel-bg: #1a1c23;
+	--th-element-bg: #272a35;
+	--th-element-bg-hover: #333845;
+	--th-border: #2e303a;
+	--th-border-hover: #4b5563;
+	--th-text-primary: #f9fafb;
+	--th-text-secondary: #9ca3af;
+	--th-accent: #3b82f6;
+	--th-accent-hover: #60a5fa;
+	--th-danger: #ef4444;
+	--th-success: #10b981;
+	--th-warning: #f59e0b;
+}
