@@ -2,7 +2,8 @@
 	import { sduiEngine, bladeStore } from './blade-state.svelte';
 	import type { Component } from 'svelte';
 	import { untrack } from 'svelte';
-	import { pushState } from '$app/navigation';
+	import { page } from '$app/state';
+	import { goto } from '$app/navigation';
 
 
 	let {
@@ -71,14 +72,13 @@
 	});
 
 	// --- Two-Way URL/State Synchronization ---
-	import { page } from '$app/stores';
 
 	let lastSyncedBlades = '';
 
 	// 1. URL -> State (Handles Refresh, Back/Forward buttons, internal Links)
 	$effect(() => {
 		// Reactive dependency on SvelteKit's page store
-		const urlBlades = $page.url.searchParams.get('blades') || '';
+		const urlBlades = page.url.searchParams.get('blades') || '';
 		
 		untrack(() => {
 			if (urlBlades !== lastSyncedBlades) {
@@ -88,15 +88,16 @@
 					const urlIds = urlBlades.split(',');
 					const payloadCache = bladeStore.getState().payloadCache;
 					
-					sduiEngine.closeAllBlades(true);
-					for (const id of urlIds) {
+					const newBlades = urlIds.map((id) => {
 						const cachedBlade = payloadCache[id];
-						if (cachedBlade) {
-							sduiEngine.openBlade(cachedBlade);
-						}
-					}
+						return cachedBlade || { id, type: 'Sdui.Container.Blade', properties: {}, children: [] };
+					});
+
+					// eslint-disable-next-line @typescript-eslint/no-explicit-any
+					(bladeStore as any).setState({ activeBlades: newBlades });
 				} else {
-					sduiEngine.closeAllBlades(true);
+					// eslint-disable-next-line @typescript-eslint/no-explicit-any
+					(bladeStore as any).setState({ activeBlades: [] });
 				}
 			}
 		});
@@ -121,19 +122,13 @@
 				const targetUrl = `${newUrl.pathname}${newUrl.search}`;
 				
 				if (isFirstRender) {
-					isFirstRender = false;
-					// Use native history API to correct the URL on first render (e.g. if cached payloads were missing).
-					// This avoids SvelteKit's "Cannot call replaceState before router is initialized" error
-					// as per the Shallow Routing caveats (state cannot be applied before first navigation).
 					window.history.replaceState(window.history.state, '', targetUrl);
 				} else {
 					// eslint-disable-next-line svelte/no-navigation-without-resolve
-					pushState(targetUrl, { isBlade: true });
+					goto(targetUrl, { keepFocus: true, noScroll: true, replaceState: false }).catch(() => {});
 				}
-			} else {
-				// Mark as false even if we didn't push state on first render
-				isFirstRender = false;
 			}
+			isFirstRender = false;
 		});
 	});
 </script>
@@ -143,7 +138,7 @@
 	style:top="{headerHeight}px"
 	style:height="calc(100% - {headerHeight}px)"
 >
-	{#each sduiEngine.activeBlades as blade, index (blade.id)}
+	{#each sduiEngine.activeBlades as blade, index (blade.id + '-' + index)}
 		{@const ResolvedComponent = registry[blade.type]}
 		{@const isBaseBlade = index === 0}
 
