@@ -1,12 +1,12 @@
 {
 	"name": "@slashand/sdui-blade-svelte",
-	"version": "1.0.4-alpha.1",
+	"version": "1.0.4-alpha.2",
 	"description": "Svelte Implementation Shell for the SDUI Blade Architecture.",
 	"author": "Slashand LLC",
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/slashand/sdui-blade-svelte.git"
+		"url": "git+https://github.com/slashand/sdui-blade-svelte.git"
 	},
 	"bugs": {
 		"url": "https://github.com/slashand/sdui-blade-svelte/issues"
@@ -50,7 +50,8 @@
 	"types": "./dist/index.d.ts",
 	"type": "module",
 	"peerDependencies": {
-		"svelte": "^5.0.0"
+		"svelte": "^5.0.0",
+		"@sveltejs/kit": "^2.0.0"
 	},
 	"devDependencies": {
 		"@eslint/compat": "2.0.5",
