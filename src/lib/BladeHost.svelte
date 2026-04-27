@@ -2,7 +2,7 @@
 	import { sduiEngine, bladeStore } from './blade-state.svelte';
 	import type { Component } from 'svelte';
 	import { untrack } from 'svelte';
-	import { pushState, replaceState } from '$app/navigation';
+	import { pushState } from '$app/navigation';
 
 
 	let {
@@ -70,70 +70,69 @@
 		return () => observer.disconnect();
 	});
 
-	// Popstate listener for native browser Back/Forward navigation
+	// --- Two-Way URL/State Synchronization ---
+	import { page } from '$app/stores';
+
+	let lastSyncedBlades = '';
+
+	// 1. URL -> State (Handles Refresh, Back/Forward buttons, internal Links)
 	$effect(() => {
-		const handlePopState = () => {
-			const params = new URL(window.location.href).searchParams;
-			const bladesParam = params.get('blades') || '';
-			const currentStateKeys = sduiEngine.activeBlades.map((b) => b.id).join(',');
-
-			if (bladesParam === currentStateKeys) {
-				return;
-			}
-
-			if (bladesParam) {
-				const urlIds = bladesParam.split(',');
-				const payloadCache = bladeStore.getState().payloadCache;
+		// Reactive dependency on SvelteKit's page store
+		const urlBlades = $page.url.searchParams.get('blades') || '';
+		
+		untrack(() => {
+			if (urlBlades !== lastSyncedBlades) {
+				lastSyncedBlades = urlBlades;
 				
-				// Clear the engine safely
-				sduiEngine.closeAllBlades(true);
-
-				// Re-open blades sequentially from cache only
-				for (const id of urlIds) {
-					const cachedBlade = payloadCache[id];
-					if (cachedBlade) {
-						sduiEngine.openBlade(cachedBlade);
+				if (urlBlades) {
+					const urlIds = urlBlades.split(',');
+					const payloadCache = bladeStore.getState().payloadCache;
+					
+					sduiEngine.closeAllBlades(true);
+					for (const id of urlIds) {
+						const cachedBlade = payloadCache[id];
+						if (cachedBlade) {
+							sduiEngine.openBlade(cachedBlade);
+						}
 					}
+				} else {
+					sduiEngine.closeAllBlades(true);
 				}
-			} else {
-				sduiEngine.closeAllBlades(true);
 			}
-		};
-
-		window.addEventListener('popstate', handlePopState);
-		return () => window.removeEventListener('popstate', handlePopState);
+		});
 	});
 
-	// Active Blades to URL Syncing
+	// 2. State -> URL (Handles UI Interactions like opening/closing blades)
 	$effect(() => {
-		// Track activeBlades length and mapping
+		// Reactive dependency on the Engine's active blades
 		const stateBlades = sduiEngine.activeBlades.map((b) => b.id).join(',');
-
-		// Prevent infinite loops if state matches URL
-		const params = new URL(window.location.href).searchParams;
-		const urlBlades = params.get('blades') || '';
-
-		if (urlBlades === stateBlades) {
-			isFirstRender = false;
-			return;
-		}
-
-		if (sduiEngine.activeBlades.length > 0) {
-			params.set('blades', stateBlades);
-		} else {
-			params.delete('blades');
-		}
-
-		const newUrl = `${window.location.pathname}${params.toString() ? '?' + params.toString() : ''}`;
-
+		
 		untrack(() => {
-			if (isFirstRender) {
-				// eslint-disable-next-line svelte/no-navigation-without-resolve
-				replaceState(newUrl, { isBlade: false });
-				isFirstRender = false;
+			if (stateBlades !== lastSyncedBlades) {
+				lastSyncedBlades = stateBlades;
+				
+				const newUrl = new URL(window.location.href);
+				if (stateBlades) {
+					newUrl.searchParams.set('blades', stateBlades);
+				} else {
+					newUrl.searchParams.delete('blades');
+				}
+
+				const targetUrl = `${newUrl.pathname}${newUrl.search}`;
+				
+				if (isFirstRender) {
+					isFirstRender = false;
+					// Use native history API to correct the URL on first render (e.g. if cached payloads were missing).
+					// This avoids SvelteKit's "Cannot call replaceState before router is initialized" error
+					// as per the Shallow Routing caveats (state cannot be applied before first navigation).
+					window.history.replaceState(window.history.state, '', targetUrl);
+				} else {
+					// eslint-disable-next-line svelte/no-navigation-without-resolve
+					pushState(targetUrl, { isBlade: true });
+				}
 			} else {
-				// eslint-disable-next-line svelte/no-navigation-without-resolve
-				pushState(newUrl, { isBlade: true });
+				// Mark as false even if we didn't push state on first render
+				isFirstRender = false;
 			}
 		});
 	});
