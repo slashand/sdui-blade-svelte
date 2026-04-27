@@ -1,6 +1,6 @@
 {
 	"name": "@slashand/sdui-blade-svelte",
-	"version": "1.0.4-alpha.3",
+	"version": "1.0.4-alpha.4",
 	"description": "Svelte Implementation Shell for the SDUI Blade Architecture.",
 	"author": "Slashand LLC",
 	"license": "MIT",
