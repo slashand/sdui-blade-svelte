@@ -2,7 +2,8 @@
 	import { sduiEngine, bladeStore } from './blade-state.svelte';
 	import type { Component } from 'svelte';
 	import { untrack } from 'svelte';
-	import { SduiElementType, type SduiBladeNode } from '@slashand/sdui-blade-core';
+	import { pushState, replaceState } from '$app/navigation';
+
 
 	let {
 		registry,
@@ -25,18 +26,18 @@
 		if (!widthProp) return '400px';
 		if (typeof widthProp === 'number') return `${widthProp}px`;
 		const map: Record<string, string> = {
-			menu: '240px',
-			small: '320px',
-			medium: '480px',
-			large: '600px',
-			xlarge: '800px',
-			xl: '800px',
-			'2xl': '960px',
-			'3xl': '1120px',
-			'4xl': '1280px',
-			'5xl': '1440px',
-			'6xl': '1600px',
-			'7xl': '1920px',
+			menu: 'var(--sdui-blade-w-menu, 265px)',
+			small: 'var(--sdui-blade-w-small, 315px)',
+			medium: 'var(--sdui-blade-w-medium, 585px)',
+			large: 'var(--sdui-blade-w-large, 855px)',
+			xlarge: 'var(--sdui-blade-w-xlarge, 1125px)',
+			xl: 'var(--sdui-blade-w-xl, 1125px)',
+			'2xl': 'var(--sdui-blade-w-2xl, 1395px)',
+			'3xl': 'var(--sdui-blade-w-3xl, 1665px)',
+			'4xl': 'var(--sdui-blade-w-4xl, 1935px)',
+			'5xl': 'var(--sdui-blade-w-5xl, 2205px)',
+			'6xl': 'var(--sdui-blade-w-6xl, 2475px)',
+			'7xl': 'var(--sdui-blade-w-7xl, 2745px)',
 			full: '100vw'
 		};
 		return map[widthProp as string] || String(widthProp);
@@ -83,23 +84,19 @@
 			if (bladesParam) {
 				const urlIds = bladesParam.split(',');
 				const payloadCache = bladeStore.getState().payloadCache;
-				const newBlades = urlIds.map((id) => {
-					const cachedBlade = payloadCache[id];
-					// Use fallback if not cached, ensuring strict engine bounds
-					return (
-						cachedBlade ||
-						({
-							id,
-							type: SduiElementType.Blade,
-							properties: {},
-							children: []
-						} as unknown as SduiBladeNode)
-					);
-				});
+				
+				// Clear the engine safely
+				sduiEngine.closeAllBlades(true);
 
-				bladeStore.setState({ activeBlades: newBlades as unknown as Required<SduiBladeNode>[] });
+				// Re-open blades sequentially from cache only
+				for (const id of urlIds) {
+					const cachedBlade = payloadCache[id];
+					if (cachedBlade) {
+						sduiEngine.openBlade(cachedBlade);
+					}
+				}
 			} else {
-				bladeStore.setState({ activeBlades: [] });
+				sduiEngine.closeAllBlades(true);
 			}
 		};
 
@@ -131,10 +128,12 @@
 
 		untrack(() => {
 			if (isFirstRender) {
-				window.history.replaceState({ isBlade: false }, '', newUrl);
+				// eslint-disable-next-line svelte/no-navigation-without-resolve
+				replaceState(newUrl, { isBlade: false });
 				isFirstRender = false;
 			} else {
-				window.history.pushState({ isBlade: true }, '', newUrl);
+				// eslint-disable-next-line svelte/no-navigation-without-resolve
+				pushState(newUrl, { isBlade: true });
 			}
 		});
 	});
