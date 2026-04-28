@@ -1,11 +1,33 @@
+<!--
+	/**
+	 * [COMPONENT]
+	 * [DashboardBlade]
+	 * 
+	 * Demo base blade showcasing nested navigation and payload rendering.
+	 * 
+	 * CORE RESPONSIBILITIES:
+	 * 1. Renders the root dashboard content.
+	 * 2. Demonstrates recursive blade opening via the Journey Protocol.
+	 * 
+	 * DESIGN PATTERN: [SDUI BLADE]
+	 *
+	 * file: src/routes/blades/DashboardBlade.svelte
+	 */
+-->
 <script lang="ts">
 	import { sduiEngine } from '$lib';
 	import { SduiElementType, type SduiBladeNode } from '@slashand/sdui-blade-core';
 	import Blade from '$lib/Blade.svelte';
 	import SduiButton from './SduiButton.svelte';
 
+	/**
+	 * The SDUI Blade payload node containing structural data and properties.
+	 */
 	let { blade }: { blade: SduiBladeNode } = $props();
 
+	/**
+	 * Ordered list of Azure Portal-style blade widths to demonstrate recursive narrowing.
+	 */
 	const decreasingWidths = [
 		'full',
 		'7xl',
@@ -21,6 +43,11 @@
 		'menu'
 	];
 
+	/**
+	 * Action handler that opens a nested detail blade.
+	 * Calculates the next smaller width to demonstrate visual stacking.
+	 * Uses a deterministic ID to prevent stack explosion on repeated clicks.
+	 */
 	function openSettings() {
 		// Find the current width to determine the next size for the demo cascade
 		const currentWidth = blade.properties?.width as string;
@@ -33,7 +60,7 @@
 				: 'medium';
 
 		sduiEngine.openBlade({
-			id: 'settings-' + Date.now(),
+			id: 'nested-demo-' + nextWidth,
 			type: SduiElementType.Blade,
 			properties: {
 				title: 'Nested Demo Blade (' + nextWidth + ')',
@@ -51,23 +78,23 @@
 >
 	{#snippet commands()}
 		<button
-			class="px-3 py-1 bg-[var(--accent)]/10 text-[var(--accent)] rounded text-sm cursor-pointer hover:bg-[var(--accent)]/20 transition-colors"
+			class="px-3 py-1 bg-[var(--th-accent)]/10 text-[var(--th-accent)] rounded text-sm cursor-pointer hover:bg-[var(--th-accent)]/20 transition-colors"
 			>Actions</button
 		>
 	{/snippet}
 
 	<div
-		class="sdui-element-root p-4 border border-[var(--border)] bg-[var(--accent)]/5 rounded text-[var(--accent)] mb-4"
+		class="sdui-element-root p-4 border border-[var(--th-border)] bg-[var(--th-accent)]/5 rounded text-[var(--th-accent)] mb-4"
 	>
 		This is the root Dashboard blade rendered from the matrix payload.
 	</div>
 
 	<div
-		class="sdui-element-root p-6 border border-[var(--border)] bg-[var(--code-bg)] rounded-xl shadow-lg mt-4"
+		class="sdui-element-root p-6 border border-[var(--th-border)] bg-[var(--th-element-bg)] rounded-xl shadow-lg mt-4"
 	>
-		<h2 class="sdui-element-text text-xl font-bold mb-2 text-[var(--text-h)]">Payload Data</h2>
-		<div class="p-4 bg-black/30 rounded border border-[var(--border)] overflow-auto max-h-[300px]">
-			<pre class="text-[10px] text-[var(--accent)] font-mono">{JSON.stringify(
+		<h2 class="sdui-element-text text-xl font-bold mb-2 text-[var(--th-text-primary)]">Payload Data</h2>
+		<div class="p-4 bg-black/30 rounded border border-[var(--th-border)] overflow-auto max-h-[300px]">
+			<pre class="text-[10px] text-[var(--th-accent)] font-mono">{JSON.stringify(
 					blade.children || [],
 					null,
 					2
@@ -96,7 +123,7 @@
 	<div class="grid grid-cols-2 gap-4 mt-6">
 		<button
 			onclick={openSettings}
-			class="sdui-action-button p-4 border border-[var(--accent)]/30 bg-[var(--accent)]/10 hover:bg-[var(--accent)]/20 rounded-lg text-[var(--accent)] font-medium transition-colors text-left shadow cursor-pointer"
+			class="sdui-action-button p-4 border border-[var(--th-accent)]/30 bg-[var(--th-accent)]/10 hover:bg-[var(--th-accent)]/20 rounded-lg text-[var(--th-accent)] font-medium transition-colors text-left shadow cursor-pointer"
 		>
 			Open Nested Blade (Journey Protocol)
 		</button>
@@ -104,7 +131,7 @@
 
 	{#snippet footer()}
 		<button
-			class="px-4 py-2 bg-[var(--accent)] text-white rounded cursor-pointer font-medium text-sm hover:opacity-90"
+			class="px-4 py-2 bg-[var(--th-accent)] text-white rounded cursor-pointer font-medium text-sm hover:opacity-90"
 			>Refresh Dashboard</button
 		>
 	{/snippet}
