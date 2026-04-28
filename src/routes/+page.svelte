@@ -108,10 +108,11 @@
 </svelte:head>
 
 <div
-	class="sdui-app-shell flex flex-col h-screen w-screen bg-[var(--bg)] text-[var(--text-h)] overflow-hidden font-sans transition-colors duration-500"
+	class="sdui-app-shell flex flex-col h-screen w-screen bg-[var(--bg)] text-[var(--text-h)] overflow-hidden font-sans transition-colors duration-500 relative"
 >
 	<!-- GLOBAL HEADINGS -->
 	<header
+		id="sdui-global-header"
 		class="sdui-global-header flex items-center h-14 shrink-0 bg-[var(--bg)] border-b border-[var(--border)] px-6 z-50 shadow-sm transition-colors duration-500"
 	>
 		<h1
@@ -244,11 +245,7 @@
 				</div>
 			</div>
 
-			<!-- BLADE ORCHESTRATION HOST MOUNTS IN ABSOLUTE OVERLAY -->
-			<!-- Set the host CSS variables directly on the BladeHost container or as a parent -->
-			<div class="absolute inset-0 pointer-events-none z-50">
-				<BladeHost registry={demoRegistry} />
-			</div>
+
 		</main>
 
 		<!-- ABSOLUTE JSON EDITOR OVERLAY -->
@@ -335,5 +332,23 @@
 				</div>
 			</aside>
 		{/if}
+	</div>
+
+	<!-- BLADE ORCHESTRATION HOST MOUNTS IN ABSOLUTE OVERLAY -->
+	<!-- Set the host CSS variables directly on the BladeHost container or as a parent -->
+	<div class="absolute inset-0 pointer-events-none z-[100]">
+		<!-- 
+			========================================================================
+			[SDUI ENGINE] BLADE HOST MOUNT POINT
+			========================================================================
+			The BladeHost acts as the spatial overlay for the Journey Protocol.
+			By default, it automatically detects the first `<header>` in the DOM 
+			and offsets its top position to prevent overlapping the global navigation.
+			
+			If your app uses a custom header tag or multiple headers, explicitly 
+			pass the target selector: <BladeHost headerSelector="#sdui-global-header" />
+			========================================================================
+		-->
+		<BladeHost registry={demoRegistry} headerSelector="#sdui-global-header" />
 	</div>
 </div>
