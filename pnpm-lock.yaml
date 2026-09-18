@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@slashand/sdui-blade-core':
-        specifier: 1.0.0-alpha.4
-        version: 1.0.0-alpha.4
+        specifier: 1.0.0-alpha.6
+        version: 1.0.0-alpha.6
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -294,8 +294,8 @@ packages:
   '@rolldown/pluginutils@1.0.0-rc.17':
     resolution: {integrity: sha512-n8iosDOt6Ig1UhJ2AYqoIhHWh/isz0xpicHTzpKBeotdVsTEcxsSA/i3EVM7gQAj0rU27OLAxCjzlj15IWY7bg==}
 
-  '@slashand/sdui-blade-core@1.0.0-alpha.4':
-    resolution: {integrity: sha512-AZ/qLus4+7qqUP6pWXhxVEilQipCDIwm1NwsTdENd4FMaNuX25+khrHX+dQz10SDhNmB3s7M+NfTVsSWMAoWzg==}
+  '@slashand/sdui-blade-core@1.0.0-alpha.6':
+    resolution: {integrity: sha512-k5uvd/AqX7+imf4itKOoamL0ijAbrlg3KEm9GKRspIWzeVdbT7hfka6Wpm5MTjAnhWXlN0uyuZabb+S9uwcvJg==}
     engines: {node: '>=20.0.0'}
 
   '@standard-schema/spec@1.1.0':
@@ -877,6 +877,7 @@ packages:
 
   lucide-svelte@1.0.1:
     resolution: {integrity: sha512-WvzZgk0pqzgda+AErLvgWxHkfg/+GgUwqKMRHvzt0IqyMdmyEDzDCk3Z+Wo/3y753oIgx8u9Q4eUbWkghFa8Jg==}
+    deprecated: Package deprecated. Please use @lucide/svelte instead.
     peerDependencies:
       svelte: ^3 || ^4 || ^5.0.0-next.42
 
@@ -1364,7 +1365,7 @@ snapshots:
 
   '@rolldown/pluginutils@1.0.0-rc.17': {}
 
-  '@slashand/sdui-blade-core@1.0.0-alpha.4':
+  '@slashand/sdui-blade-core@1.0.0-alpha.6':
     dependencies:
       zustand: 5.0.12
     transitivePeerDependencies:

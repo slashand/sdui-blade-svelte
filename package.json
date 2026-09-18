@@ -1,6 +1,6 @@
 {
 	"name": "@slashand/sdui-blade-svelte",
-	"version": "1.0.4-alpha.5",
+	"version": "1.0.4-alpha.6",
 	"description": "Svelte Implementation Shell for the SDUI Blade Architecture.",
 	"author": "Slashand LLC",
 	"license": "MIT",
@@ -80,7 +80,7 @@
 		"svelte"
 	],
 	"dependencies": {
-		"@slashand/sdui-blade-core": "1.0.0-alpha.4",
+		"@slashand/sdui-blade-core": "1.0.0-alpha.6",
 		"clsx": "^2.1.1",
 		"lucide-svelte": "^1.0.1",
 		"tailwind-merge": "^3.5.0"

@@ -17,22 +17,27 @@
 	 */
 -->
 <script lang="ts">
-	import { sduiEngine, bladeStore } from './blade-state.svelte';
+	import { goto } from '$app/navigation';
+	import { page } from '$app/state';
+	import {
+		resolveSduiBackdropConfig,
+		type SduiBackdropConfig
+	} from '@slashand/sdui-blade-core';
 	import type { Component } from 'svelte';
 	import { untrack } from 'svelte';
-	import { page } from '$app/state';
-	import { goto } from '$app/navigation';
-
+	import { bladeStore, sduiEngine } from './blade-state.svelte';
 
 	/**
 	 * Props for BladeHost.
 	 * @property {Record<string, Component>} registry - Map of string types to Svelte components.
+	 * @property {SduiBackdropConfig} [backdrop] - Host-level defaults for blade interaction barriers.
 	 * @property {boolean} [showBackdrop] - Controls whether a darkened backdrop appears behind open blades.
 	 * @property {string|null} [headerSelector] - DOM selector for the header element to calculate dynamic top offset.
 	 * @property {boolean} [isAppShell] - Indicates whether the blade host acts as the full-screen application shell.
 	 * @property {string} [class] - Optional CSS classes to append to the host container.
 	 */
 	let {
+		backdrop: hostBackdrop,
 		registry,
 		showBackdrop = false,
 		headerSelector = 'header',
@@ -41,12 +46,54 @@
 		...rest
 	}: {
 		registry: Record<string, Component<Record<string, unknown>>>;
+		backdrop?: SduiBackdropConfig;
 		showBackdrop?: boolean;
 		headerSelector?: string | null;
 		isAppShell?: boolean;
 		class?: string;
 		[key: string]: unknown;
 	} = $props();
+
+	type ResolvedBackdropConfig = {
+		blur: number;
+		closeOnClick: boolean;
+		enabled: boolean;
+		opacity: number;
+	};
+
+	function clampBackdropNumber(
+		value: unknown,
+		fallback: number,
+		minimum: number,
+		maximum?: number
+	): number {
+		if (typeof value !== 'number' || !Number.isFinite(value)) return fallback;
+		const boundedValue = Math.max(minimum, value);
+		return maximum === undefined ? boundedValue : Math.min(maximum, boundedValue);
+	}
+
+	function resolveBackdropConfig(
+		blade: { properties?: Record<string, unknown> },
+		legacyEnabled: boolean
+	): ResolvedBackdropConfig {
+		const bladeBackdrop = blade.properties?.backdrop as SduiBackdropConfig | undefined;
+		const coreBackdropDefaults = resolveSduiBackdropConfig(hostBackdrop);
+		const fallbackOpacity = hostBackdrop?.opacity ?? (legacyEnabled ? 0.5 : coreBackdropDefaults.opacity);
+		const fallbackBlur = hostBackdrop?.blur ?? (legacyEnabled ? 8 : coreBackdropDefaults.blur);
+
+		return {
+			blur: clampBackdropNumber(bladeBackdrop?.blur ?? fallbackBlur, 0, 0),
+			closeOnClick:
+				bladeBackdrop?.closeOnClick ?? hostBackdrop?.closeOnClick ?? coreBackdropDefaults.closeOnClick,
+			enabled: bladeBackdrop?.enabled ?? hostBackdrop?.enabled ?? legacyEnabled,
+			opacity: clampBackdropNumber(
+				bladeBackdrop?.opacity ?? fallbackOpacity,
+				legacyEnabled ? 0.5 : 0,
+				0,
+				1
+			)
+		};
+	}
 
 	/**
 	 * Custom transition function to slide a blade in/out from the right.
@@ -64,7 +111,7 @@
 	/**
 	 * Calculates the CSS width for a blade based on its width property.
 	 * Fallback mapped values default to Azure Portal-style breakpoints.
-	 * 
+	 *
 	 * Modifying this affects all dynamic blade sizing across the platform.
 	 * @param {unknown} widthProp The width value provided in the blade's payload (e.g., 'medium', '400', or 'full').
 	 * @returns {string} A strictly formatted CSS string (e.g., 'var(--sdui-blade-w-medium, 585px)').
@@ -94,7 +141,7 @@
 	 * Flag indicating if this is the initial render cycle, preventing redundant history pushes.
 	 */
 	let isFirstRender = true;
-	
+
 	/**
 	 * Dynamically observed height of the global header to offset the blade host accurately.
 	 */
@@ -111,7 +158,7 @@
 		if (!header) return;
 
 		headerHeight = header.offsetHeight;
-		
+
 		const observer = new ResizeObserver((entries) => {
 			for (let entry of entries) {
 				if (entry.target === header) {
@@ -119,7 +166,7 @@
 				}
 			}
 		});
-		
+
 		observer.observe(header);
 		return () => observer.disconnect();
 	});
@@ -132,18 +179,20 @@
 	$effect(() => {
 		// Reactive dependency on SvelteKit's page store
 		const urlBlades = page.url.searchParams.get('blades') || '';
-		
+
 		untrack(() => {
 			if (urlBlades !== lastSyncedBlades) {
 				lastSyncedBlades = urlBlades;
-				
+
 				if (urlBlades) {
 					const urlIds = urlBlades.split(',');
 					const payloadCache = bladeStore.getState().payloadCache;
-					
+
 					const newBlades = urlIds.map((id) => {
 						const cachedBlade = payloadCache[id];
-						return cachedBlade || { id, type: 'Sdui.Container.Blade', properties: {}, children: [] };
+						return (
+							cachedBlade || { id, type: 'Sdui.Container.Blade', properties: {}, children: [] }
+						);
 					});
 
 					// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -160,11 +209,11 @@
 	$effect(() => {
 		// Reactive dependency on the Engine's active blades
 		const stateBlades = sduiEngine.activeBlades.map((b) => b.id).join(',');
-		
+
 		untrack(() => {
 			if (stateBlades !== lastSyncedBlades) {
 				lastSyncedBlades = stateBlades;
-				
+
 				const newUrl = new URL(window.location.href);
 				if (stateBlades) {
 					newUrl.searchParams.set('blades', stateBlades);
@@ -173,7 +222,7 @@
 				}
 
 				const targetUrl = `${newUrl.pathname}${newUrl.search}`;
-				
+
 				if (isFirstRender) {
 					window.history.replaceState(window.history.state, '', targetUrl);
 				} else {
@@ -196,21 +245,26 @@
 	{#each sduiEngine.activeBlades as blade, index (blade.id + '-' + index)}
 		{@const ResolvedComponent = registry[blade.type]}
 		{@const isBaseBlade = isAppShell && index === 0}
+		{@const isTopBlade = index === sduiEngine.activeBlades.length - 1}
+		{@const backdropConfig = resolveBackdropConfig(blade, showBackdrop)}
 
-		{#if (!isBaseBlade && showBackdrop) || (!isAppShell && showBackdrop)}
+		{#if isTopBlade && (!isBaseBlade || !isAppShell) && backdropConfig.enabled}
 			<!-- svelte-ignore a11y_click_events_have_key_events -->
 			<!-- svelte-ignore a11y_no_static_element_interactions -->
 			<div
-				class="blade-host-backdrop-div absolute inset-0 bg-black/50 backdrop-blur-sm z-[0] pointer-events-auto"
-				style:z-index={9 + index}
-				onclick={() => sduiEngine.closeTopBlade()}
+				class="blade-host-backdrop-div pointer-events-auto absolute inset-0 z-[0]"
+				aria-hidden="true"
+				style:backdrop-filter={`blur(${backdropConfig.blur}px)`}
+				style:background-color={`rgb(0 0 0 / ${backdropConfig.opacity})`}
+				style:z-index={99 + index * 2}
+				onclick={() => backdropConfig.closeOnClick && sduiEngine.closeTopBlade()}
 			></div>
 		{/if}
 
 		<div
 			class="blade-host-layer-div absolute inset-0 pointer-events-none"
 			style:background-color={isBaseBlade ? 'var(--th-panel-bg)' : 'transparent'}
-			style:z-index={isBaseBlade ? 90 : 100 + index}
+			style:z-index={isBaseBlade ? 90 : 100 + index * 2}
 			in:slideRight={{ duration: 400 }}
 			out:slideRight={{ duration: 400 }}
 		>

@@ -9,6 +9,7 @@
 
 	let jsonInput = $state('');
 	let showJson = $state(false);
+	let backdropEnabled = $state(true);
 	let validationError = $state<string | null>(null);
 
 	$effect(() => {
@@ -125,6 +126,13 @@
 			<span class="text-[var(--accent)] text-[10px] font-bold uppercase tracking-wider">
 				Current Theme: {themes[currentThemeIdx].name}
 			</span>
+			<button
+				type="button"
+				onclick={() => (backdropEnabled = !backdropEnabled)}
+				class="sdui-toggle-backdrop-button text-[var(--text)] hover:text-[var(--text-h)] text-[10px] cursor-pointer px-4 py-1.5 rounded border border-[var(--border)] bg-[var(--code-bg)] hover:bg-[var(--border)] transition-all uppercase font-bold tracking-wider"
+			>
+				Backdrop: {backdropEnabled ? 'Enabled' : 'Disabled'}
+			</button>
 			<button
 				onclick={() => (showJson = !showJson)}
 				class="sdui-toggle-json-button text-[var(--text)] hover:text-[var(--text-h)] text-[10px] cursor-pointer px-4 py-1.5 rounded border border-[var(--border)] bg-[var(--code-bg)] hover:bg-[var(--border)] transition-all uppercase font-bold tracking-wider"
@@ -349,6 +357,10 @@
 			pass the target selector: <BladeHost headerSelector="#sdui-global-header" />
 			========================================================================
 		-->
-		<BladeHost registry={demoRegistry} headerSelector="#sdui-global-header" />
+		<BladeHost
+			registry={demoRegistry}
+			headerSelector="#sdui-global-header"
+			backdrop={{ enabled: backdropEnabled }}
+		/>
 	</div>
 </div>
