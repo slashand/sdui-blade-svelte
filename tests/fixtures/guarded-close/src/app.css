@@ -1,0 +1,36 @@
+@import 'tailwindcss';
+@source '../../../../dist';
+:root {
+	--th-panel-bg: #1e293b;
+	--th-border: #94a3b8;
+	--th-text-primary: #f8fafc;
+	--th-accent: #06b6d4;
+	font-family: sans-serif;
+}
+body {
+	margin: 0;
+	background: #0f172a;
+	color: #f8fafc;
+}
+.fixture-global-header {
+	height: 48px;
+	background: #334155;
+}
+.fixture-global-header-tall {
+	height: 96px;
+}
+.fixture-button {
+	padding: 8px;
+	border: 1px solid currentColor;
+	border-radius: 6px;
+	cursor: pointer;
+}
+.fixture-body {
+	min-height: 0;
+	flex: 1;
+	overflow-y: auto;
+	padding: 16px;
+}
+.fixture-long-copy {
+	min-height: 1800px;
+}

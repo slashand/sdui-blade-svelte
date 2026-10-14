@@ -9,6 +9,9 @@ node_modules
 /.svelte-kit
 /build
 /dist
+/test-results
+/playwright-report
+/tests/fixtures/guarded-close/.svelte-kit
 
 # OS
 .DS_Store
