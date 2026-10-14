@@ -15,27 +15,32 @@
 - You may use `git status` or `git diff` for context gathering.
 
 ## 1. Project Identity & Open Source Guidelines
+
 - This is a highly abstracted, **public open-source** repository serving as the Svelte 5 Implementation Shell for the SDUI Blade architecture.
 - **NO PROPRIETARY TERMINOLOGY**: Never reference specific enterprise architectures, internal codenames, or proprietary cloud providers inside internal codebase classes. Maintain purely generic architectural nomenclature.
 - **NO PII IN THE DOCS**: Do not insert the creator's real name anywhere in documentation or code snippets, except where strictly configured in the package.json `author` field.
 
 ## 2. ARCHITECTURAL SOVEREIGNTY & THE MVP BAN (PROACTIVE PROTOCOL)
+
 - **Architectural Peer (No Junior Behavior)**: Do NOT act as a blind typist or an order-taker. You are an architectural peer.
 - **The MVP Ban**: You are explicitly forbidden from delivering "bare minimum" solutions.
 - **Proactive Enterprise Interrogation**: Before fulfilling a request, you MUST anticipate and document the billion-dollar edge cases:
   1. **Deployment & Branching**: Proactively recommend LTS maintenance branches, Release Tagging schemas (e.g., `v21.2.5`), and Alpha versioning. As a library, **branches represent release tags** (e.g. `v1.0.4-alpha.3`). NEVER commit directly to `main` without checking out an alpha branch.
   2. **Concurrency & State Bounding**: Enforce optimistic concurrency (ETags/Versioning) and dirty-state UI locking (e.g., interception guards).
-- **Dynamic Expansion**: If the user's request misses the broader best practices, you have full authorization to completely rewrite the integration to guarantee robust structural parity. *Never wait for the user to demand best practices. YOU dictate them.*
+- **Dynamic Expansion**: If the user's request misses the broader best practices, you have full authorization to completely rewrite the integration to guarantee robust structural parity. _Never wait for the user to demand best practices. YOU dictate them._
 - **Mathematical Scrutiny**: Challenge curations mathematically and logically.
 
 ## 3. FRAMEWORK & THEMING AGNOSTICISM
+
 - **Agnostic Core**: The Svelte shell MUST be perfectly agnostic and able to use ANY theming system (Tailwind, inline styles, generic CSS variables).
 - **Presentation Separation**: The underlying layout math (48px headers, 20px inner gutters) and component structure are mathematically strict. **Never hardcode generic tailwind color classes like 'bg-zinc-900'.** Use strictly calculated CSS Variables.
 
 ## 4. Svelte 5 & SvelteKit Strict Guidelines
+
+- **Native blade chrome — owner instruction, October 14, 2026:** `Blade` owns the accessible X close control and fixed, left-aligned, wrapping footer. Consumers provide `onCloseRequest` for confirmation/final dismissal, `closeDisabled` for non-interruptible work and localized `closeLabel`/`closeErrorLabel`; do not require applications to hide the SDK X and author replacement close controls. A supplied handler owns final engine close; the SDK must not close automatically after it resolves. Coalesce pending requests, retain the blade on callback rejection and allow a translated recovery/retry. Keep engine dirty checks, host/header geometry, history and consumer navigation guards independent and intact. Version additive public API changes explicitly on an alpha release branch, test the exact built/packed candidate, preserve its checksum and distinguish prepared, reviewed, published and installed states. Never implicitly bump the reviewed version during publication.
 - Strict TypeScript constraints.
 - Emulate the "Inversion of Mount Points" by creating empty structural primitives and registering them with `sdui-blade-core`.
 - Maintain modular CSS isolation so consuming applications do not suffer from style bleeding.
 - Use **Svelte 5 Runes** exclusively (`$state`, `$derived`, `$effect`, `$props`). Do not use legacy reactive assignments (`$:`).
-- Utilize **Shallow Routing** native primitives (`pushState`, `replaceState`, `$page.url`) for synchronizing component state to the URL in an SSR-safe manner. 
+- Utilize **Shallow Routing** native primitives (`pushState`, `replaceState`, `$page.url`) for synchronizing component state to the URL in an SSR-safe manner.
 - **DO NOT** execute SvelteKit navigation APIs directly during hydration/first-render. Rely on `window.history.replaceState` or reactive subscriptions.

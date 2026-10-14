@@ -1,0 +1,66 @@
+.blade-close-button:not(.hidden) {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex: none;
+	min-width: 2rem;
+	min-height: 2rem;
+	padding: var(--sdui-close-padding, 0.5rem);
+	border: 0;
+	border-radius: var(--sdui-control-radius, 0.25rem);
+	background: transparent;
+	color: var(--th-text-primary, inherit);
+	cursor: pointer;
+}
+.blade-close-button:disabled {
+	cursor: default;
+	opacity: var(--sdui-disabled-opacity, 0.5);
+}
+.blade-close-button:focus-visible {
+	outline: 2px solid var(--th-accent, currentColor);
+	outline-offset: 2px;
+}
+.blade-footer-element {
+	display: flex;
+	flex: none;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: flex-start;
+	gap: var(--sdui-footer-gap, 0.5rem);
+}
+.blade-close-error {
+	color: var(--th-danger, var(--th-text-primary, inherit));
+	margin-block: 0 0.5rem;
+}
+.blade-close-button[aria-busy='true'] .blade-close-icon-svg {
+	visibility: hidden;
+}
+.blade-close-progress {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 1rem;
+	height: 1rem;
+	margin: -0.5rem;
+	border: 2px solid currentColor;
+	border-right-color: transparent;
+	border-radius: 50%;
+	animation: blade-close-spin 0.8s linear infinite;
+}
+@keyframes blade-close-spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+@media (prefers-reduced-motion: reduce) {
+	.blade-close-progress {
+		animation: none;
+	}
+}
+@media (pointer: coarse) {
+	.blade-close-button {
+		min-width: 44px;
+		min-height: 44px;
+	}
+}

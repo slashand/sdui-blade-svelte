@@ -1,5 +1,8 @@
 import type { Snippet } from 'svelte';
 
+/** Consumer-owned confirmation and final close, preserving the SDK's native close chrome. */
+export type BladeCloseRequestHandler = () => void | Promise<void>;
+
 /**
  * Valid width configurations for the Aztec Blade Layout System.
  */
@@ -35,6 +38,13 @@ export interface BladeProps {
 	children: Snippet;
 	/** Optional command nodes to inject into the right-hand header action area */
 	commands?: Snippet;
+	/** SDK-owned action area, fixed outside body scrolling and left-aligned by default. */
+	footer?: Snippet;
+	/** Owns confirmation and final dismissal; the SDK does not close again after this callback. */
+	onCloseRequest?: BladeCloseRequestHandler;
+	closeDisabled?: boolean;
+	closeLabel?: string;
+	closeErrorLabel?: string;
 	/** Aztec layout width identifier, CSS variable, or raw pixel value */
 	width?: BladeWidth;
 	/** Optional override class for the blade container */
