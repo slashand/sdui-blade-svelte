@@ -9,9 +9,24 @@
 	padding: var(--sdui-close-padding, 0.5rem);
 	border: 0;
 	border-radius: var(--sdui-control-radius, 0.25rem);
-	background: transparent;
-	color: var(--th-text-primary, inherit);
+	background: var(--sdui-close-background, #c42b1c);
+	color: var(--sdui-close-color, #fff);
 	cursor: pointer;
+}
+.blade-close-button:enabled:hover {
+	background: var(--sdui-close-hover-background, #a92316);
+	color: var(--sdui-close-hover-color, var(--sdui-close-color, #fff));
+}
+.blade-close-button:enabled:active {
+	background: var(--sdui-close-active-background, #8f1d12);
+	color: var(--sdui-close-active-color, var(--sdui-close-color, #fff));
+}
+@media (forced-colors: active) {
+	.blade-close-button:not(.hidden) {
+		border: 1px solid ButtonText;
+		background: ButtonFace;
+		color: ButtonText;
+	}
 }
 .blade-close-button:disabled {
 	cursor: default;

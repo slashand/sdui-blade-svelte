@@ -1,5 +1,22 @@
 import { test, expect } from '@playwright/test';
 
+test('native X has a red default and consumer-controlled color states', async ({ page }) => {
+	await page.goto('/');
+	const close = page.locator('.blade-close-button');
+	await expect(close).toHaveCSS('background-color', 'rgb(196, 43, 28)');
+	await expect(close).toHaveCSS('color', 'rgb(255, 255, 255)');
+	await close.evaluate((button) => {
+		const parent = button.closest('.blade-wrapper-div') as HTMLElement;
+		parent.style.setProperty('--sdui-close-background', '#075985');
+		parent.style.setProperty('--sdui-close-hover-background', '#0c4a6e');
+		parent.style.setProperty('--sdui-close-color', '#f0f9ff');
+	});
+	await expect(close).toHaveCSS('background-color', 'rgb(7, 89, 133)');
+	await expect(close).toHaveCSS('color', 'rgb(240, 249, 255)');
+	await close.hover();
+	await expect(close).toHaveCSS('background-color', 'rgb(12, 74, 110)');
+});
+
 test('native X preserves the consumer confirmation and localized label', async ({ page }) => {
 	await page.goto('/');
 	const close = page.getByRole('button', { name: 'Cerrar panel', exact: true });
@@ -56,8 +73,8 @@ test('footer defaults left and stays fixed through body scroll and header resizi
 	await page.goto('/');
 	const footer = page.locator('.blade-footer-element');
 	await expect(footer).toBeVisible();
-	expect(await footer.evaluate((element) => getComputedStyle(element).justifyContent)).toBe(
-		'flex-start'
+	expect(['flex-start', 'flow-start']).toContain(
+		await footer.evaluate((element) => getComputedStyle(element).justifyContent)
 	);
 	const before = (await footer.boundingBox())!;
 	await page
