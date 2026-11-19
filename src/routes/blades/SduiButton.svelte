@@ -2,7 +2,7 @@
 	import type { SduiNode, SduiBlade } from '@slashand/sdui-blade-core';
 	import { sduiEngine } from '$lib';
 
-	let { node } = $props<{ node: SduiNode }>();
+	let { node }: { node: SduiNode } = $props();
 
 	let label = $derived((node.properties?.label as string) || 'Button');
 	let action = $derived(node.properties?.action as Record<string, unknown> | undefined);

@@ -131,7 +131,7 @@
 			<button
 				type="button"
 				class="blade-close-button sdui-action-button {closeButtonClass ||
-					'p-2 bg-transparent border-none text-[var(--th-text-primary)] cursor-pointer hover:bg-black/10 dark:hover:bg-white/10 rounded'}"
+					'p-2 border-none cursor-pointer rounded'}"
 				onclick={closeBlade}
 				aria-label={closeLabel}
 				disabled={closeDisabled || closing}
