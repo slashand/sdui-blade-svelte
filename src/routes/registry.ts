@@ -1,6 +1,6 @@
 import type { Component } from 'svelte';
 import { SduiElementType } from '@slashand/sdui-blade-core';
-import DashboardBlade from './blades/DashboardBlade.svelte';
+import DashboardBlade from './blades/OmniverseDashboardBlade.svelte';
 import DetailBlade from './blades/DetailBlade.svelte';
 import SduiButton from './blades/SduiButton.svelte';
 

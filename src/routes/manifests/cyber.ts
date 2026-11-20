@@ -15,7 +15,7 @@ export const cyberApp: OmniverseApp = {
 			properties: {
 				title: 'Intrusion Detection: Node Alpha',
 				subtitle: 'Active Threats: 14',
-				width: 'medium'
+				width: 'full'
 			},
 			children: [
 				{
@@ -72,12 +72,12 @@ export const cyberApp: OmniverseApp = {
 								{
 									id: 'cyber-btn-lock',
 									type: SduiElementType.Button,
-									properties: { label: 'Initiate VPC Lockdown' }
+									properties: { label: 'Initiate VPC Lockdown', action: { type: 'dispatch' } }
 								},
 								{
 									id: 'cyber-btn-pcap',
 									type: SduiElementType.Button,
-									properties: { label: 'Export PCAP' }
+									properties: { label: 'Export PCAP', action: { type: 'dispatch' } }
 								}
 							]
 						}

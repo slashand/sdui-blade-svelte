@@ -16,7 +16,7 @@ export const fintechApp: OmniverseApp = {
 			properties: {
 				title: 'Trading Desk: BTC/USD',
 				subtitle: 'Institutional Clearing Node',
-				width: 'xlarge',
+				width: 'full',
 				toolbar: [
 					{
 						id: 'crypto-tbar-1',

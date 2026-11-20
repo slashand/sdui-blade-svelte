@@ -23,7 +23,7 @@ export const stressApp: OmniverseApp = {
 					id: 'stress-btn-1',
 					type: SduiElementType.Button,
 					properties: {
-						label: 'Spawn 7XL Dimensions (1920px)',
+						label: 'Spawn 7XL Dimensions (2745px)',
 						action: {
 							type: 'navigate',
 							payload: {
@@ -31,7 +31,7 @@ export const stressApp: OmniverseApp = {
 								type: SduiElementType.Blade,
 								properties: {
 									title: 'Phase 2: 7XL Overlay',
-									subtitle: 'Width Array: 1920px',
+									subtitle: 'Width Array: 2745px',
 									width: '7xl'
 								},
 								children: [
@@ -39,7 +39,7 @@ export const stressApp: OmniverseApp = {
 										id: 'stress-btn-2',
 										type: SduiElementType.Button,
 										properties: {
-											label: 'Spawn 6XL Dimensions (1600px)',
+											label: 'Spawn 6XL Dimensions (2475px)',
 											action: {
 												type: 'navigate',
 												payload: {
@@ -47,7 +47,7 @@ export const stressApp: OmniverseApp = {
 													type: SduiElementType.Blade,
 													properties: {
 														title: 'Phase 3: 6XL Overlay',
-														subtitle: 'Width Array: 1600px',
+														subtitle: 'Width Array: 2475px',
 														width: '6xl'
 													},
 													children: [
@@ -55,7 +55,7 @@ export const stressApp: OmniverseApp = {
 															id: 'stress-btn-3',
 															type: SduiElementType.Button,
 															properties: {
-																label: 'Spawn 5XL Dimensions (1440px)',
+																label: 'Spawn 5XL Dimensions (2205px)',
 																action: {
 																	type: 'navigate',
 																	payload: {
@@ -63,7 +63,7 @@ export const stressApp: OmniverseApp = {
 																		type: SduiElementType.Blade,
 																		properties: {
 																			title: 'Phase 4: 5XL Overlay',
-																			subtitle: 'Width Array: 1440px',
+																			subtitle: 'Width Array: 2205px',
 																			width: '5xl'
 																		},
 																		children: [
@@ -71,7 +71,7 @@ export const stressApp: OmniverseApp = {
 																				id: 'stress-btn-4',
 																				type: SduiElementType.Button,
 																				properties: {
-																					label: 'Spawn 4XL Dimensions (1280px)',
+																					label: 'Spawn 4XL Dimensions (1935px)',
 																					action: {
 																						type: 'navigate',
 																						payload: {
@@ -79,7 +79,7 @@ export const stressApp: OmniverseApp = {
 																							type: SduiElementType.Blade,
 																							properties: {
 																								title: 'Phase 5: 4XL Overlay',
-																								subtitle: 'Width Array: 1280px',
+																								subtitle: 'Width Array: 1935px',
 																								width: '4xl'
 																							},
 																							children: [
@@ -87,7 +87,7 @@ export const stressApp: OmniverseApp = {
 																									id: 'stress-btn-5',
 																									type: SduiElementType.Button,
 																									properties: {
-																										label: 'Spawn 3XL Dimensions (1120px)',
+																										label: 'Spawn 3XL Dimensions (1665px)',
 																										action: {
 																											type: 'navigate',
 																											payload: {
@@ -95,7 +95,7 @@ export const stressApp: OmniverseApp = {
 																												type: SduiElementType.Blade,
 																												properties: {
 																													title: 'Phase 6: 3XL Overlay',
-																													subtitle: 'Width Array: 1120px',
+																													subtitle: 'Width Array: 1665px',
 																													width: '3xl'
 																												},
 																												children: [
@@ -103,7 +103,8 @@ export const stressApp: OmniverseApp = {
 																														id: 'stress-btn-6',
 																														type: SduiElementType.Button,
 																														properties: {
-																															label: 'Spawn 2XL Dimensions (960px)',
+																															label:
+																																'Spawn 2XL Dimensions (1395px)',
 																															action: {
 																																type: 'navigate',
 																																payload: {
@@ -111,7 +112,7 @@ export const stressApp: OmniverseApp = {
 																																	type: SduiElementType.Blade,
 																																	properties: {
 																																		title: 'Phase 7: 2XL Overlay',
-																																		subtitle: 'Width Array: 960px',
+																																		subtitle: 'Width Array: 1395px',
 																																		width: '2xl'
 																																	},
 																																	children: [
@@ -120,7 +121,7 @@ export const stressApp: OmniverseApp = {
 																																			type: SduiElementType.Button,
 																																			properties: {
 																																				label:
-																																					'Spawn XL Dimensions (800px)',
+																																					'Spawn XL Dimensions (1125px)',
 																																				action: {
 																																					type: 'navigate',
 																																					payload: {
@@ -130,7 +131,7 @@ export const stressApp: OmniverseApp = {
 																																							title:
 																																								'Phase 8: XL Overlay',
 																																							subtitle:
-																																								'Width Array: 800px',
+																																								'Width Array: 1125px',
 																																							width: 'xl'
 																																						},
 																																						children: [
@@ -139,7 +140,7 @@ export const stressApp: OmniverseApp = {
 																																								type: SduiElementType.Button,
 																																								properties: {
 																																									label:
-																																										'Spawn Large Dimensions (600px)',
+																																										'Spawn Large Dimensions (855px)',
 																																									action: {
 																																										type: 'navigate',
 																																										payload: {
@@ -149,7 +150,7 @@ export const stressApp: OmniverseApp = {
 																																												title:
 																																													'Phase 9: Large Overlay',
 																																												subtitle:
-																																													'Width Array: 600px',
+																																													'Width Array: 855px',
 																																												width:
 																																													'large'
 																																											},
@@ -160,7 +161,7 @@ export const stressApp: OmniverseApp = {
 																																													properties:
 																																														{
 																																															label:
-																																																'Spawn Medium Dimensions (480px)',
+																																																'Spawn Medium Dimensions (585px)',
 																																															action:
 																																																{
 																																																	type: 'navigate',
@@ -173,7 +174,7 @@ export const stressApp: OmniverseApp = {
 																																																					title:
 																																																						'Phase 10: Medium Overlay',
 																																																					subtitle:
-																																																						'Width Array: 480px',
+																																																						'Width Array: 585px',
 																																																					width:
 																																																						'medium'
 																																																				},
@@ -185,7 +186,7 @@ export const stressApp: OmniverseApp = {
 																																																						properties:
 																																																							{
 																																																								label:
-																																																									'Spawn Small Dimensions (320px)',
+																																																									'Spawn Small Dimensions (315px)',
 																																																								action:
 																																																									{
 																																																										type: 'navigate',
@@ -198,7 +199,7 @@ export const stressApp: OmniverseApp = {
 																																																														title:
 																																																															'Phase 11: Small Overlay',
 																																																														subtitle:
-																																																															'Width Array: 320px',
+																																																															'Width Array: 315px',
 																																																														width:
 																																																															'small'
 																																																													},
@@ -210,7 +211,7 @@ export const stressApp: OmniverseApp = {
 																																																															properties:
 																																																																{
 																																																																	label:
-																																																																		'Spawn Menu Dimensions (240px)',
+																																																																		'Spawn Menu Dimensions (265px)',
 																																																																	action:
 																																																																		{
 																																																																			type: 'navigate',
@@ -223,7 +224,7 @@ export const stressApp: OmniverseApp = {
 																																																																							title:
 																																																																								'Phase 12: Core Minimum',
 																																																																							subtitle:
-																																																																								'Width Array: 240px',
+																																																																								'Width Array: 265px',
 																																																																							width:
 																																																																								'menu'
 																																																																						},

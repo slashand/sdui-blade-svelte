@@ -15,7 +15,7 @@ export const aiApp: OmniverseApp = {
 			properties: {
 				title: 'GPT-7 Training Run',
 				subtitle: 'Epoch 14/1000 | Loss: 0.041',
-				width: 'large'
+				width: 'full'
 			},
 			children: [
 				{
@@ -47,7 +47,7 @@ export const aiApp: OmniverseApp = {
 							type: SduiElementType.Button,
 							properties: {
 								label: 'Inject Extra Compute Shards',
-								action: { type: 'api', endpoint: '/scale' }
+								action: { type: 'invoke', target: '/scale' }
 							}
 						}
 					]
