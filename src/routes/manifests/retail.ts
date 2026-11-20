@@ -12,7 +12,7 @@ export const retailApp: OmniverseApp = {
 		blade: {
 			id: 'blade-pos',
 			type: SduiElementType.Blade,
-			properties: { title: 'Register 14', subtitle: 'Cashier: J. Smith', width: 'medium' },
+			properties: { title: 'Register 14', subtitle: 'Cashier: J. Smith', width: 'full' },
 			children: [
 				{
 					id: 'pos-alert',

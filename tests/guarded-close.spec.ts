@@ -1,10 +1,19 @@
 import { test, expect } from '@playwright/test';
 
-test('native X has a red default and consumer-controlled color states', async ({ page }) => {
+test('native X is borderless and clear at rest, red on hover and consumer-controlled', async ({
+	page
+}) => {
 	await page.goto('/');
 	const close = page.locator('.blade-close-button');
+	await expect(close).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
+	await expect(close).toHaveCSS('border-top-width', '0px');
+	await close.hover();
 	await expect(close).toHaveCSS('background-color', 'rgb(196, 43, 28)');
+	for (const side of ['top', 'right', 'bottom', 'left']) {
+		await expect(close).toHaveCSS(`border-${side}-width`, '0px');
+	}
 	await expect(close).toHaveCSS('color', 'rgb(255, 255, 255)');
+	await page.mouse.move(0, 0);
 	await close.evaluate((button) => {
 		const parent = button.closest('.blade-wrapper-div') as HTMLElement;
 		parent.style.setProperty('--sdui-close-background', '#075985');

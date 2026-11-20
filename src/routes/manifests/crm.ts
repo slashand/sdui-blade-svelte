@@ -13,7 +13,7 @@ export const crmApp: OmniverseApp = {
 		blade: {
 			id: 'blade-crm',
 			type: SduiElementType.Blade,
-			properties: { title: 'Q3 Deal Pipeline', subtitle: 'Region: EMEA North', width: 'xlarge' },
+			properties: { title: 'Q3 Deal Pipeline', subtitle: 'Region: EMEA North', width: 'full' },
 			children: [
 				{
 					id: 'crm-grid',

@@ -13,7 +13,8 @@ export default defineConfig({
 		{ name: 'mobile', use: { viewport: { width: 390, height: 844 }, hasTouch: true } }
 	],
 	webServer: {
-		command: 'pnpm exec vite --configLoader runner --host 127.0.0.1 --port 49371 --strictPort',
+		command:
+			'node ../../../node_modules/vite/bin/vite.js --configLoader runner --host 127.0.0.1 --port 49371 --strictPort',
 		cwd: fileURLToPath(new URL('./fixtures/guarded-close', import.meta.url)),
 		url: 'http://127.0.0.1:49371',
 		timeout: 120000,

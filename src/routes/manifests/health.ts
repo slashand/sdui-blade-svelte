@@ -15,7 +15,7 @@ export const healthApp: OmniverseApp = {
 			properties: {
 				title: 'Patient: Doe, John',
 				subtitle: 'DOB: 1984-06-12 | MRN: 94811-A',
-				width: 'large'
+				width: 'full'
 			},
 			children: [
 				{
@@ -92,14 +92,14 @@ export const healthApp: OmniverseApp = {
 						{
 							id: 'emr-btn-cc',
 							type: SduiElementType.Button,
-							properties: { label: 'Request Cardiology Consult' }
+							properties: { label: 'Request Cardiology Consult', action: { type: 'dispatch' } }
 						},
 						{
 							id: 'emr-btn',
 							type: SduiElementType.Button,
 							properties: {
 								label: 'Authorize Epinephrine',
-								action: { type: 'api', endpoint: '/med/auth' }
+								action: { type: 'invoke', target: '/med/auth' }
 							}
 						}
 					]

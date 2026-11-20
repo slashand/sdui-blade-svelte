@@ -63,8 +63,6 @@ export function generateProceduralPayload(): OmniverseApp {
 		children: innerChildren
 	});
 
-	const widths = ['small', 'medium', 'large', 'xlarge'];
-
 	return {
 		id: `chaos-${hash}`,
 		name: `Chaos Matrix ${hash}`,
@@ -79,16 +77,12 @@ export function generateProceduralPayload(): OmniverseApp {
 				properties: {
 					title: `Procedural Node: ${hash.toUpperCase()}`,
 					subtitle: 'Infinite Synthesizer Engine',
-					width: widths[Math.floor(Math.random() * widths.length)] as
-						| 'small'
-						| 'medium'
-						| 'large'
-						| 'full',
+					width: 'full',
 					toolbar: [
 						{
 							id: `tbar-${hash}`,
 							type: SduiElementType.Button,
-							properties: { label: `Sync Node ${hash}` }
+							properties: { label: `Sync Node ${hash}`, action: { type: 'dispatch' } }
 						}
 					],
 					footer: [
@@ -113,6 +107,11 @@ export function generateProceduralPayload(): OmniverseApp {
 									}
 								}
 							}
+						},
+						{
+							id: `close-${hash}`,
+							type: SduiElementType.Button,
+							properties: { label: 'Close workspace', action: { type: 'close' } }
 						}
 					]
 				},

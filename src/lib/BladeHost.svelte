@@ -19,10 +19,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
-	import {
-		resolveSduiBackdropConfig,
-		type SduiBackdropConfig
-	} from '@slashand/sdui-blade-core';
+	import { resolveSduiBackdropConfig, type SduiBackdropConfig } from '@slashand/sdui-blade-core';
 	import type { Component } from 'svelte';
 	import { untrack } from 'svelte';
 	import { bladeStore, sduiEngine } from './blade-state.svelte';
@@ -78,13 +75,16 @@
 	): ResolvedBackdropConfig {
 		const bladeBackdrop = blade.properties?.backdrop as SduiBackdropConfig | undefined;
 		const coreBackdropDefaults = resolveSduiBackdropConfig(hostBackdrop);
-		const fallbackOpacity = hostBackdrop?.opacity ?? (legacyEnabled ? 0.5 : coreBackdropDefaults.opacity);
+		const fallbackOpacity =
+			hostBackdrop?.opacity ?? (legacyEnabled ? 0.5 : coreBackdropDefaults.opacity);
 		const fallbackBlur = hostBackdrop?.blur ?? (legacyEnabled ? 8 : coreBackdropDefaults.blur);
 
 		return {
 			blur: clampBackdropNumber(bladeBackdrop?.blur ?? fallbackBlur, 0, 0),
 			closeOnClick:
-				bladeBackdrop?.closeOnClick ?? hostBackdrop?.closeOnClick ?? coreBackdropDefaults.closeOnClick,
+				bladeBackdrop?.closeOnClick ??
+				hostBackdrop?.closeOnClick ??
+				coreBackdropDefaults.closeOnClick,
 			enabled: bladeBackdrop?.enabled ?? hostBackdrop?.enabled ?? legacyEnabled,
 			opacity: clampBackdropNumber(
 				bladeBackdrop?.opacity ?? fallbackOpacity,
@@ -117,7 +117,7 @@
 	 * @returns {string} A strictly formatted CSS string (e.g., 'var(--sdui-blade-w-medium, 585px)').
 	 */
 	function getBladeWidth(widthProp: unknown): string {
-		if (!widthProp) return '400px';
+		if (!widthProp) return 'var(--sdui-blade-w-large, 855px)';
 		if (typeof widthProp === 'number') return `${widthProp}px`;
 		const map: Record<string, string> = {
 			menu: 'var(--sdui-blade-w-menu, 265px)',
@@ -271,7 +271,7 @@
 			<div
 				class="blade-host-panel-div absolute top-0 right-0 h-full pointer-events-auto shadow-2xl border-l border-[var(--th-border)] bg-[var(--th-panel-bg)] flex flex-col"
 				style:width="100%"
-				style:max-width={isBaseBlade ? '100%' : getBladeWidth(blade.properties?.width)}
+				style:max-width={getBladeWidth(blade.properties?.width)}
 			>
 				{#if ResolvedComponent}
 					<ResolvedComponent {blade} />

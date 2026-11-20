@@ -12,7 +12,7 @@ export const mediaApp: OmniverseApp = {
 		blade: {
 			id: 'blade-media',
 			type: SduiElementType.Blade,
-			properties: { title: 'Job Node #4A9', subtitle: 'Project: Project Titan', width: 'large' },
+			properties: { title: 'Job Node #4A9', subtitle: 'Project: Project Titan', width: 'full' },
 			children: [
 				{
 					id: 'media-alert',

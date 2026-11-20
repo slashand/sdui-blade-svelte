@@ -15,7 +15,7 @@ export const hrApp: OmniverseApp = {
 			properties: {
 				title: 'September Execution',
 				subtitle: 'Clearance: Pending Level 2',
-				width: 'large'
+				width: 'full'
 			},
 			children: [
 				{
