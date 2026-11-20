@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@slashand/sdui-blade-core':
-        specifier: 1.0.0-alpha.6
-        version: 1.0.0-alpha.6
+        specifier: 1.1.0
+        version: 1.1.0
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -330,8 +330,8 @@ packages:
   '@rolldown/pluginutils@1.1.1':
     resolution: {integrity: sha512-glFIJDvLNDtJhT9qrMFWLPbvS+skxgt4L0K8Ei2YtnhPysAJnsI7nyxSJxKj4ADeKX0OLjC4ntRkwpLOoS3rwA==}
 
-  '@slashand/sdui-blade-core@1.0.0-alpha.6':
-    resolution: {integrity: sha512-k5uvd/AqX7+imf4itKOoamL0ijAbrlg3KEm9GKRspIWzeVdbT7hfka6Wpm5MTjAnhWXlN0uyuZabb+S9uwcvJg==}
+  '@slashand/sdui-blade-core@1.1.0':
+    resolution: {integrity: sha512-zL5Z2j0CCgxwYj/Q8NaolC07YqrDkz8VyUDRLtR+qODcJQZRLrix9pTBerMnKU3NzDd/2hMMz8k80mUwt9jAjw==}
     engines: {node: '>=20.0.0'}
 
   '@standard-schema/spec@1.1.0':
@@ -1293,8 +1293,8 @@ packages:
   zimmerframe@1.1.4:
     resolution: {integrity: sha512-B58NGBEoc8Y9MWWCQGl/gq9xBCe4IiKM0a2x7GZdQKOW5Exr8S1W24J6OgM1njK8xCRGvAJIL/MxXHf6SkmQKQ==}
 
-  zustand@5.0.12:
-    resolution: {integrity: sha512-i77ae3aZq4dhMlRhJVCYgMLKuSiZAaUPAct2AksxQ+gOtimhGMdXljRT21P5BNpeT4kXlLIckvkPM029OljD7g==}
+  zustand@5.1.0:
+    resolution: {integrity: sha512-ciJZlP48M1PTQbVQq81CGVFxHTLpZNrFjKqwjtCU34AWuXTZT/jrF3p9+fI84Cf1eSCMLapxqBy/SNTfwOBuqA==}
     engines: {node: '>=12.20.0'}
     peerDependencies:
       '@types/react': '>=18.0.0'
@@ -1501,9 +1501,9 @@ snapshots:
 
   '@rolldown/pluginutils@1.1.1': {}
 
-  '@slashand/sdui-blade-core@1.0.0-alpha.6':
+  '@slashand/sdui-blade-core@1.1.0':
     dependencies:
-      zustand: 5.0.12
+      zustand: 5.1.0
     transitivePeerDependencies:
       - '@types/react'
       - immer
@@ -2378,4 +2378,4 @@ snapshots:
 
   zimmerframe@1.1.4: {}
 
-  zustand@5.0.12: {}
+  zustand@5.1.0: {}
