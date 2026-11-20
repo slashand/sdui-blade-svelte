@@ -195,11 +195,9 @@
 						);
 					});
 
-					// eslint-disable-next-line @typescript-eslint/no-explicit-any
-					(bladeStore as any).setState({ activeBlades: newBlades });
+					bladeStore.setState({ activeBlades: newBlades });
 				} else {
-					// eslint-disable-next-line @typescript-eslint/no-explicit-any
-					(bladeStore as any).setState({ activeBlades: [] });
+					bladeStore.setState({ activeBlades: [] });
 				}
 			}
 		});
@@ -249,8 +247,6 @@
 		{@const backdropConfig = resolveBackdropConfig(blade, showBackdrop)}
 
 		{#if isTopBlade && (!isBaseBlade || !isAppShell) && backdropConfig.enabled}
-			<!-- svelte-ignore a11y_click_events_have_key_events -->
-			<!-- svelte-ignore a11y_no_static_element_interactions -->
 			<div
 				class="blade-host-backdrop-div pointer-events-auto absolute inset-0 z-[0]"
 				aria-hidden="true"

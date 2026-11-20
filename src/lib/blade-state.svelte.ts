@@ -3,16 +3,16 @@ import { createSduiBladeStore, type BladeState, type SduiBlade } from '@slashand
 /**
  * [STATE_ENGINE]
  * [SduiBladeEngine]
- * 
+ *
  * Svelte 5 reactive wrapper over the framework-agnostic SDUI Blade Zustand store.
- * 
+ *
  * CORE RESPONSIBILITIES:
  * 1. Hydrates and synchronizes Zustand state into Svelte 5 runes.
  * 2. Provides derived state for layout calculations.
  * 3. Exposes strongly-typed methods for manipulating the blade stack.
- * 
+ *
  * DESIGN PATTERN: [REACTIVE ADAPTER / SINGLETON]
- * 
+ *
  * file: src/lib/blade-state.svelte.ts
  */
 
@@ -22,6 +22,7 @@ import { createSduiBladeStore, type BladeState, type SduiBlade } from '@slashand
 export interface MinimalStore {
 	getState: () => BladeState;
 	subscribe: (listener: (state: BladeState, prevState: BladeState) => void) => () => void;
+	setState: (state: Partial<BladeState>) => void;
 }
 
 /**
