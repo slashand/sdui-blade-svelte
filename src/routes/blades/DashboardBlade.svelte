@@ -92,8 +92,12 @@
 	<div
 		class="sdui-element-root p-6 border border-[var(--th-border)] bg-[var(--th-element-bg)] rounded-xl shadow-lg mt-4"
 	>
-		<h2 class="sdui-element-text text-xl font-bold mb-2 text-[var(--th-text-primary)]">Payload Data</h2>
-		<div class="p-4 bg-black/30 rounded border border-[var(--th-border)] overflow-auto max-h-[300px]">
+		<h2 class="sdui-element-text text-xl font-bold mb-2 text-[var(--th-text-primary)]">
+			Payload Data
+		</h2>
+		<div
+			class="p-4 bg-black/30 rounded border border-[var(--th-border)] overflow-auto max-h-[300px]"
+		>
 			<pre class="text-[10px] text-[var(--th-accent)] font-mono">{JSON.stringify(
 					blade.children || [],
 					null,

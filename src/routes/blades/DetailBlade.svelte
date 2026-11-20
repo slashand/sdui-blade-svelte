@@ -48,7 +48,9 @@
 	<div
 		class="sdui-element-root p-6 border border-[var(--th-border)] bg-[var(--th-element-bg)] rounded-xl shadow-lg mt-4"
 	>
-		<h2 class="sdui-element-text text-xl font-bold mb-2 text-[var(--th-text-primary)]">Detail Node</h2>
+		<h2 class="sdui-element-text text-xl font-bold mb-2 text-[var(--th-text-primary)]">
+			Detail Node
+		</h2>
 		<p class="text-[var(--th-text-secondary)] opacity-80 mb-4">
 			This blade was opened dynamically via the Journey Protocol.
 		</p>
