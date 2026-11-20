@@ -1,0 +1,2 @@
+minimumReleaseAgeExclude:
+  - '@slashand/sdui-blade-core@1.1.0'
