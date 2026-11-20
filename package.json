@@ -1,6 +1,6 @@
 {
 	"name": "@slashand/sdui-blade-svelte",
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"description": "Svelte Implementation Shell for the SDUI Blade Architecture.",
 	"author": "Slashand LLC",
 	"license": "MIT",
@@ -25,6 +25,7 @@
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"test:browser": "playwright test --config tests/playwright.config.ts",
+		"test:gallery": "playwright test --config tests/gallery.config.ts",
 		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write .",
 		"publish:latest": "npm run build && npm publish --tag latest",
