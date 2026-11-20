@@ -1,0 +1,36 @@
+name: Publish to NPM
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.17.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.x'
+          cache: pnpm
+          registry-url: 'https://registry.npmjs.org'
+      - name: Verify stable release tag and matching Core dependency
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: node scripts/verify-release.mjs "$RELEASE_TAG"
+      - name: Install locked dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Check and build package
+        run: |
+          pnpm check
+          pnpm build
+      - name: Publish stable package
+        run: npm publish --access public --tag latest --provenance --ignore-scripts
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN_SDUI_BLADE }}

@@ -2,14 +2,14 @@
 
 > **The Svelte 5 Implementation Shell for the SDUI Blade Architecture.**
 
-`sdui-blade-svelte` is a highly-abstracted, horizontal spatial interface (The Journey Protocol) engine built natively for **Svelte 5**. Leveraging Svelte 5 Runes (`$state`, `$derived`, `$effect`) and native `snippet` templating, it provides a high-performance presentation layer over the agnostic state machine of `sdui-blade-core`.
+`@slashand/sdui-blade-svelte` is a horizontal spatial interface shell built natively for **Svelte 5**. It uses Svelte 5 Runes (`$state`, `$derived`, `$effect`) and native snippets to present the framework-agnostic state machine in `@slashand/sdui-blade-core`.
 
-Originally forged as the core spatial orchestration engine for **Gravity English (`[ge]`)**—a multi-tenant educational platform—the underlying `sdui-blade-core` engine handles the abstract mathematical logic, state caching, and the "Inversion of Mount Points". This Svelte library (`[sbs]`) acts as the native adapter, interpreting that state machine into an elegant, non-blocking, and highly interactive UI tailored for the Svelte ecosystem.
+Core handles the journey state and manifest contract. This package provides the Svelte presentation layer and blade components.
 
 ## Features
 
 - **Svelte 5 Native**: Built exclusively around modern Svelte 5 APIs. Zero legacy reactivity (`$:`); 100% Runes and Snippets.
-- **The Journey Protocol**: Implements horizontal, Azure-style overlapping panels (Blades) rather than blocking modals.
+- **The Journey Protocol**: Implements horizontal overlapping panels (Blades) rather than blocking modals.
 - **Agnostic Theming**: Fully decoupled presentation layer. Bring your own CSS variables (e.g., Tailwind CSS v4) to style the geometry without fighting baked-in colors.
 - **Responsive Geometry**: Blades intelligently scale into mobile viewports while maintaining their proportional constraints via native `max-width` cascading.
 - **Core Orchestration**: Powered by `@slashand/sdui-blade-core` (`[sbc]`) for bulletproof state-machine interactions and spatial history.
@@ -17,7 +17,7 @@ Originally forged as the core spatial orchestration engine for **Gravity English
 ## Installation
 
 ```bash
-npm install sdui-blade-svelte @slashand/sdui-blade-core
+npm install @slashand/sdui-blade-svelte @slashand/sdui-blade-core
 ```
 
 _(Or use `pnpm` / `yarn` depending on your workspace)._
@@ -31,7 +31,7 @@ Register your Svelte components with the core engine and Svelte's `Component` re
 ```svelte
 <!-- src/routes/+layout.svelte -->
 <script lang="ts">
-	import { sduiEngine } from 'sdui-blade-svelte';
+	import { sduiEngine } from '@slashand/sdui-blade-svelte';
 	import { setContext } from 'svelte';
 	import MyDetailBlade from './blades/MyDetailBlade.svelte';
 
@@ -57,7 +57,7 @@ Mount the `BladeHost` at the root of your application to catch and render spatia
 ```svelte
 <!-- src/routes/+page.svelte -->
 <script lang="ts">
-	import { BladeHost, sduiEngine } from 'sdui-blade-svelte';
+	import { BladeHost, sduiEngine } from '@slashand/sdui-blade-svelte';
 
 	function openBlade() {
 		sduiEngine.navigate({ type: 'my-detail', id: 'detail-1' });
@@ -76,7 +76,7 @@ Construct your blades using the provided structural primitives to ensure correct
 ```svelte
 <!-- src/routes/blades/MyDetailBlade.svelte -->
 <script lang="ts">
-	import { Blade } from 'sdui-blade-svelte';
+	import { Blade } from '@slashand/sdui-blade-svelte';
 </script>
 
 {#snippet commands()}
