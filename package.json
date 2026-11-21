@@ -28,7 +28,7 @@
 		"test:gallery": "playwright test --config tests/gallery.config.ts",
 		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write .",
-		"publish:latest": "npm run build && npm publish --tag latest",
+		"publish:latest": "node scripts/verify-release.mjs --local && npm whoami --registry=https://registry.npmjs.org/ && pnpm build && pnpm check && pnpm lint && npm publish --access public --tag latest --ignore-scripts --registry=https://registry.npmjs.org/",
 		"publish:prod": "npm run publish:latest"
 	},
 	"files": [

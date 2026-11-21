@@ -98,6 +98,17 @@ Construct your blades using the provided structural primitives to ensure correct
 - **Transient Memory:** Spatial journeys are tracked and can be synced to `popstate` / `window.location` for deep-linking.
 - **No Naked Elements:** The structural components are meticulously tagged with purpose-driven class names (e.g., `blade-wrapper-div`, `blade-header-element`) for reliable E2E testing and DOM targeting.
 
+## Maintainer publishing
+
+For a new, reviewed stable version, pin the matching published Core version and
+update `pnpm-lock.yaml`, then run `npm run publish:latest`. It refuses an existing
+npm version, confirms login, builds, checks Svelte and lint, and publishes directly
+under `latest`. Complete npm's browser-based two-factor challenge when prompted.
+GitHub Releases do not publish this package. Local publishing does not generate
+npm's cloud CI provenance attestation. Verify the published version and integrity
+with `npm view @slashand/sdui-blade-svelte@latest version dist.integrity --json` and
+`npm dist-tag ls @slashand/sdui-blade-svelte`.
+
 ## License
 
 MIT
